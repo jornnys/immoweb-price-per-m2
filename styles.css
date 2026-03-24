@@ -1,0 +1,24 @@
+.immoweb-ppm2-badge {
+  display: inline-block;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: #1d1d1f;
+  background-color: rgba(0, 0, 0, 0.06);
+  padding: 3px 10px;
+  border-radius: 980px;
+  margin-left: 8px;
+  white-space: nowrap;
+  vertical-align: middle;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+}
+
+.immoweb-ppm2-badge--detail {
+  font-size: 17px;
+  font-weight: 600;
+  padding: 6px 14px;
+  margin-left: 12px;
+  background-color: rgba(0, 0, 0, 0.05);
+}
