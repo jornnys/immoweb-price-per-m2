@@ -75,13 +75,16 @@
     if (!label) return;
 
     const badge = createBadge(label);
-    // XL cards have .card--result__price-container, medium cards don't
     const priceContainer = card.querySelector(".card--result__price-container");
-    const priceP = card.querySelector(".card--result__price");
     if (priceContainer) {
       priceContainer.appendChild(badge);
-    } else if (priceP) {
-      priceP.insertAdjacentElement("afterend", badge);
+    } else {
+      // Medium cards: append inside the price element to stay inline
+      const priceP = card.querySelector(".card--result__price");
+      if (priceP) {
+        badge.classList.add("immoweb-ppm2-badge--medium");
+        priceP.appendChild(badge);
+      }
     }
   }
 

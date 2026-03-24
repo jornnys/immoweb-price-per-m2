@@ -15,6 +15,12 @@
   -webkit-font-smoothing: antialiased;
 }
 
+.immoweb-ppm2-badge--medium {
+  font-size: 11px;
+  padding: 2px 7px;
+  margin-left: 6px;
+}
+
 .immoweb-ppm2-badge--detail {
   font-size: 17px;
   font-weight: 600;
