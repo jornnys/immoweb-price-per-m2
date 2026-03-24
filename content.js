@@ -7,9 +7,12 @@
   // --- Parsing (duplicated from src/parsing.js for content script context) ---
 
   function parsePrice(text) {
-    if (!text || text.includes(" - ") || text.includes("–")) return null;
-    const cleaned = text.replace(/[€*\s.]/g, "").replace(/,/g, "");
-    const value = parseInt(cleaned, 10);
+    if (!text || text.includes(" - ") || text.includes("\u2013") || text.includes("+")) return null;
+    // Match the first price-like sequence (digits with . or , or space separators)
+    const match = text.match(/[\d][\d.,\s]*/);
+    if (!match) return null;
+    const digits = match[0].replace(/\D/g, "");
+    const value = parseInt(digits, 10);
     return Number.isFinite(value) && value > 0 ? value : null;
   }
 
@@ -72,11 +75,13 @@
     if (!label) return;
 
     const badge = createBadge(label);
-    const priceContainer = card.querySelector(
-      ".card--result__price-container"
-    );
+    // XL cards have .card--result__price-container, medium cards don't
+    const priceContainer = card.querySelector(".card--result__price-container");
+    const priceP = card.querySelector(".card--result__price");
     if (priceContainer) {
       priceContainer.appendChild(badge);
+    } else if (priceP) {
+      priceP.insertAdjacentElement("afterend", badge);
     }
   }
 

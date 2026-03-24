@@ -58,6 +58,14 @@ describe("parsePrice", () => {
   it("returns null for zero price", () => {
     expect(parsePrice("€0")).toBeNull();
   });
+
+  it("parses starting price prefix", () => {
+    expect(parsePrice("Starting price : €230,000")).toBe(230000);
+  });
+
+  it("returns null for price + monthly cost", () => {
+    expect(parsePrice("€97,500 + €1,475/month")).toBeNull();
+  });
 });
 
 describe("parseSurface", () => {
