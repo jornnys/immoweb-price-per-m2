@@ -19,7 +19,7 @@ Chrome extension that displays price per square meter on [immoweb.be](https://ww
 ## Development
 
 ```bash
-npm test          # run tests once
+npm test           # run tests once
 npm run test:watch # run tests in watch mode
 ```
 
