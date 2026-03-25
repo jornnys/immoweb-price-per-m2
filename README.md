@@ -25,6 +25,4 @@ npm run test:watch # run tests in watch mode
 
 ## How it works
 
-**Search results**: Parses price and surface area from the DOM of each listing card. Injects a badge next to the price.
-
-Badges are only shown when both a single price and surface area are available.
+Parses price and surface area from the DOM of each search result card and injects a badge next to the price. Badges are only shown when both a single price and surface area are available.

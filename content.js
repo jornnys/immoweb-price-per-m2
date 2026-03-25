@@ -96,56 +96,6 @@
       .forEach(processSearchCard);
   }
 
-  // --- Detail page ---
-
-  function injectDetailBadge(price, surface) {
-    if (document.querySelector(`.${BADGE_CLASS}`)) return;
-
-    const ppm2 = calculatePricePerM2(price, surface);
-    if (!ppm2) return;
-
-    const label = formatPricePerM2(ppm2);
-    if (!label) return;
-
-    const badge = createBadge(label);
-    badge.classList.add("immoweb-ppm2-badge--detail");
-
-    const headerPrice = document.querySelector(".classified__price");
-    if (headerPrice) {
-      headerPrice.appendChild(badge);
-    }
-  }
-
-  function handleDetailPage() {
-    if (document.querySelector(`.${BADGE_CLASS}`)) return;
-
-    // Content scripts run in an isolated world and can't access
-    // window.classified directly. Inject a script into the page context
-    // to read the data and pass it back via a custom DOM event.
-    const script = document.createElement("script");
-    script.textContent = `
-      (function() {
-        var c = window.classified;
-        if (!c) return;
-        var price = c.price && c.price.mainValue;
-        var surface = c.property && c.property.netHabitableSurface;
-        if (price && surface) {
-          document.dispatchEvent(new CustomEvent("__ppm2_data__", {
-            detail: { price: price, surface: surface }
-          }));
-        }
-      })();
-    `;
-    document.documentElement.appendChild(script);
-    script.remove();
-  }
-
-  // Listen for data from the injected page-context script
-  document.addEventListener("__ppm2_data__", (e) => {
-    const { price, surface } = e.detail;
-    injectDetailBadge(price, surface);
-  });
-
   // --- Main ---
   // Detect page type by DOM presence rather than URL patterns,
   // since immoweb uses different paths per language (en/nl/fr).
@@ -154,15 +104,9 @@
     return document.querySelectorAll('article[class*="card--result"]').length > 0;
   }
 
-  function isDetailPage() {
-    return !!document.querySelector(".classified__price");
-  }
-
   function run() {
     if (isSearchPage()) {
       handleSearchResults();
-    } else if (isDetailPage()) {
-      handleDetailPage();
     }
   }
 
